@@ -49,7 +49,7 @@ class commentsWikibarBehaviors
 				}
 			}
 			else {
-				$css = html::stripHostURL($core->blog->getQmarkURL().'pf=commentsWikibar/wikibar.css');
+				$css = html::stripHostURL($core->blog->getQmarkURL().'pf=commentsWikibar/wikibar.min.css');
 			}
 			echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$css.'"/>';
 		}
@@ -60,7 +60,7 @@ class commentsWikibarBehaviors
 		global $core;
 		
 		if (self::canActivate()) {
-			$js = html::stripHostURL($core->blog->getQmarkURL().'pf=commentsWikibar/wikibar.js');
+			$js = html::stripHostURL($core->blog->getQmarkURL().'pf=commentsWikibar/wikibar.min.js');
 
 			echo
 			'<script type="text/javascript" src="'.$js.'"></script>'."\n".
