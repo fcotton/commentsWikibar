@@ -9,7 +9,7 @@
 	height: 16px;
 	font-size: 0.1em;
 	cursor: s-resize;
-	background: transparent url(?pf=commentsWikibar/img/btn-sprites.png) no-repeat center -160px;
+	background: transparent url(?pf=commentsWikibar/img/wikibar.png) no-repeat center -160px;
 }
 .jstElements {
 	padding: 3px 3px;
@@ -23,7 +23,7 @@
 	border-width: 1px;
 	border-color: #ddd;
 	background-color : #f7f7f7;
-   	background-image: url(?pf=commentsWikibar/img/btn-sprites.png);
+   	background-image: url(?pf=commentsWikibar/img/wikibar.png);
 	background-repeat: no-repeat;
 }
 .jstElements button:hover {

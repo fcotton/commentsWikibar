@@ -101,7 +101,7 @@ jsButton.prototype.draw = function() {
 		button.onclick = function() { try { This.fn.apply(This.scope, arguments) } catch (e) {} return false; };
 	}
 	return button;
-}
+};
 
 function jsSpace(id) {
 	this.id = id || null;
@@ -115,7 +115,7 @@ jsSpace.prototype.draw = function() {
 	if (this.width) span.style.marginRight = this.width+'px';
 
 	return span;
-}
+};
 
 function jsCombo(title, options, scope, fn, className) {
 	this.title = title || null;
@@ -149,7 +149,7 @@ jsCombo.prototype.draw = function() {
 	}
 
 	return select;
-}
+};
 
 
 jsToolBar.prototype = {
@@ -326,7 +326,7 @@ jsToolBar.prototype.elements.strong = {
 	fn: {
 		wiki: function() { this.singleTag('__') }
 	}
-}
+};
 
 // em
 jsToolBar.prototype.elements.em = {
@@ -335,7 +335,7 @@ jsToolBar.prototype.elements.em = {
 	fn: {
 		wiki: function() { this.singleTag("''") }
 	}
-}
+};
 
 // ins
 jsToolBar.prototype.elements.ins = {
@@ -344,7 +344,7 @@ jsToolBar.prototype.elements.ins = {
 	fn: {
 		wiki: function() { this.singleTag('++') }
 	}
-}
+};
 
 // del
 jsToolBar.prototype.elements.del = {
@@ -353,7 +353,7 @@ jsToolBar.prototype.elements.del = {
 	fn: {
 		wiki: function() { this.singleTag('--') }
 	}
-}
+};
 
 // quote
 jsToolBar.prototype.elements.quote = {
@@ -362,7 +362,7 @@ jsToolBar.prototype.elements.quote = {
 	fn: {
 		wiki: function() { this.singleTag('{{','}}') }
 	}
-}
+};
 
 // code
 jsToolBar.prototype.elements.code = {
@@ -371,7 +371,7 @@ jsToolBar.prototype.elements.code = {
 	fn: {
 		wiki: function() { this.singleTag('@@') }
 	}
-}
+};
 
 // spacer
 jsToolBar.prototype.elements.space1 = {type: 'space'}
@@ -391,7 +391,7 @@ jsToolBar.prototype.elements.ul = {
 			});
 		}
 	}
-}
+};
 
 // ol
 jsToolBar.prototype.elements.ol = {
@@ -405,10 +405,10 @@ jsToolBar.prototype.elements.ol = {
 			});
 		}
 	}
-}
+};
 
 // spacer
-jsToolBar.prototype.elements.space3 = {type: 'space'}
+jsToolBar.prototype.elements.space3 = {type: 'space'};
 
 // link
 jsToolBar.prototype.elements.link = {
@@ -430,7 +430,7 @@ jsToolBar.prototype.elements.link = {
 
 		return { href: this.stripBaseURL(href), hreflang: hreflang };
 	}
-}
+};
 
 jsToolBar.prototype.elements.link.fn.wiki = function() {
 	var link = this.elements.link.prompt.call(this);
