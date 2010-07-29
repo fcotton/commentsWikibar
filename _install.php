@@ -17,11 +17,12 @@ if (version_compare($installed_version,$this_version,'>=')) {
 }
 
 $core->blog->settings->addNamespace('commentswikibar');
-if (null === $core->blog->settings->commentswikibar->commentswikibar_active) {
-	$wiki_comments = (boolean)$core->blog->settings->system->wiki_comments;
-	$core->blog->settings->commentswikibar->put('commentswikibar_active',$wiki_comments,'boolean');
-	$core->blog->settings->commentswikibar->put('commentswikibar_custom_css','','string');
-}
+$core->blog->settings->commentswikibar->put('commentswikibar_active',false,'boolean','',false,true);
+$core->blog->settings->commentswikibar->put('commentswikibar_add_css',true,'boolean','',false,true);
+$core->blog->settings->commentswikibar->put('commentswikibar_add_jslib',true,'boolean','',false,true);
+$core->blog->settings->commentswikibar->put('commentswikibar_add_jsglue',true,'boolean','',false,true);
+$core->blog->settings->commentswikibar->put('commentswikibar_custom_css','','string','',false,true);
+$core->blog->settings->commentswikibar->put('commentswikibar_custom_jslib','','string','',false,true);
 
 $core->setVersion('commentsWikibar',$this_version);
 return true;

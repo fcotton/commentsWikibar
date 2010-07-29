@@ -36,22 +36,24 @@ class commentsWikibarBehaviors
 		global $core;
 		
 		if (self::canActivate()) {
-			$custom_css = $core->blog->settings->commentswikibar->commentswikibar_custom_css;		
-			if (!empty($custom_css)) {
-				if (strpos('/',$custom_css) === 0) {
-					$css = $custom_css;
+			if ($core->blog->settings->commentswikibar->commentswikibar_add_css) {
+				$custom_css = trim($core->blog->settings->commentswikibar->commentswikibar_custom_css);
+				if (!empty($custom_css)) {
+					if (strpos('/',$custom_css) === 0 || preg_match('!^http[s]?://.+!',$custom_css)) {
+						$css = $custom_css;
+					}
+					else {
+						$css =
+							$core->blog->settings->system->themes_url."/".
+							$core->blog->settings->system->theme."/".
+							$custom_css;
+					}
 				}
 				else {
-					$css =
-						$core->blog->settings->system->themes_url."/".
-						$core->blog->settings->system->theme."/".
-						$custom_css;
+					$css = html::stripHostURL($core->blog->getQmarkURL().'pf=commentsWikibar/wikibar.min.css');
 				}
+				echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$css.'"/>';
 			}
-			else {
-				$css = html::stripHostURL($core->blog->getQmarkURL().'pf=commentsWikibar/wikibar.min.css');
-			}
-			echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$css.'"/>';
 		}
 	}
 	
@@ -60,35 +62,53 @@ class commentsWikibarBehaviors
 		global $core;
 		
 		if (self::canActivate()) {
-			$js = html::stripHostURL($core->blog->getQmarkURL().'pf=commentsWikibar/wikibar.min.js');
-
-			echo
-			'<script type="text/javascript" src="'.$js.'"></script>'."\n".
-			'<script type="text/javascript">'."\n".
-			"//<![CDATA[\n".
-			"addListener(window,'load',function() {\n".
-			"jsToolBar.prototype.base_url = '".html::escapeJS($core->blog->host)."'; \n".
-			"jsToolBar.prototype.legend_msg = '".html::escapeJS(__('You can use the following shortcuts to format your text.'))."'; \n".
-			"jsToolBar.prototype.elements.strong.title = '".html::escapeJS(__('Strong emphasis'))."'; \n".
-			"jsToolBar.prototype.elements.em.title = '".html::escapeJS(__('Emphasis'))."'; \n".
-			"jsToolBar.prototype.elements.ins.title = '".html::escapeJS(__('Inserted'))."'; \n".
-			"jsToolBar.prototype.elements.del.title = '".html::escapeJS(__('Deleted'))."'; \n".
-			"jsToolBar.prototype.elements.quote.title = '".html::escapeJS(__('Inline quote'))."'; \n".
-			"jsToolBar.prototype.elements.code.title = '".html::escapeJS(__('Code'))."'; \n".
-			"jsToolBar.prototype.elements.ul.title = '".html::escapeJS(__('Unordered list'))."'; \n".
-			"jsToolBar.prototype.elements.ol.title = '".html::escapeJS(__('Ordered list'))."'; \n".
-			"jsToolBar.prototype.elements.link.title = '".html::escapeJS(__('Link'))."'; \n".
-			"jsToolBar.prototype.elements.link.href_prompt = '".html::escapeJS(__('URL?'))."'; \n".
-			"jsToolBar.prototype.elements.link.hreflang_prompt = '".html::escapeJS(__('Language?'))."'; \n\n".
-			"if (document.getElementById) { \n".
-			"	if (document.getElementById('".html::escapeJS('c_content')."')) { \n".
-			"		var commentTb = new jsToolBar(document.getElementById('".html::escapeJS('c_content')."')); \n".
-			"		commentTb.draw(); \n".
-			"	}\n".
-			"}\n".
-			"});\n".
-			"\n//]]>\n".
-			"</script>\n";
+			if ($core->blog->settings->commentswikibar->commentswikibar_add_jslib) {
+				$custom_jslib = trim($core->blog->settings->commentswikibar->commentswikibar_custom_jslib);
+				if (!empty($custom_jslib)) {
+					if (strpos('/',$custom_jslib) === 0 || preg_match('!^http[s]?://.+!',$custom_jslib)) {
+						$js = $custom_jslib;
+					}
+					else {
+						$js =
+							$core->blog->settings->system->themes_url."/".
+							$core->blog->settings->system->theme."/".
+							$custom_jslib;
+					}
+				}
+				else {
+					$js = html::stripHostURL($core->blog->getQmarkURL().'pf=commentsWikibar/wikibar.min.js');
+				}
+				echo '<script type="text/javascript" src="'.$js.'"></script>'."\n";
+			}
+			
+			if ($core->blog->settings->commentswikibar->commentswikibar_add_jsglue) {
+				echo
+					'<script type="text/javascript">'."\n".
+					"//<![CDATA[\n".
+					"addListener(window,'load',function() {\n".
+					"jsToolBar.prototype.base_url = '".html::escapeJS($core->blog->host)."'; \n".
+					"jsToolBar.prototype.legend_msg = '".html::escapeJS(__('You can use the following shortcuts to format your text.'))."'; \n".
+					"jsToolBar.prototype.elements.strong.title = '".html::escapeJS(__('Strong emphasis'))."'; \n".
+					"jsToolBar.prototype.elements.em.title = '".html::escapeJS(__('Emphasis'))."'; \n".
+					"jsToolBar.prototype.elements.ins.title = '".html::escapeJS(__('Inserted'))."'; \n".
+					"jsToolBar.prototype.elements.del.title = '".html::escapeJS(__('Deleted'))."'; \n".
+					"jsToolBar.prototype.elements.quote.title = '".html::escapeJS(__('Inline quote'))."'; \n".
+					"jsToolBar.prototype.elements.code.title = '".html::escapeJS(__('Code'))."'; \n".
+					"jsToolBar.prototype.elements.ul.title = '".html::escapeJS(__('Unordered list'))."'; \n".
+					"jsToolBar.prototype.elements.ol.title = '".html::escapeJS(__('Ordered list'))."'; \n".
+					"jsToolBar.prototype.elements.link.title = '".html::escapeJS(__('Link'))."'; \n".
+					"jsToolBar.prototype.elements.link.href_prompt = '".html::escapeJS(__('URL?'))."'; \n".
+					"jsToolBar.prototype.elements.link.hreflang_prompt = '".html::escapeJS(__('Language?'))."'; \n\n".
+					"if (document.getElementById) { \n".
+					"	if (document.getElementById('".html::escapeJS('c_content')."')) { \n".
+					"		var commentTb = new jsToolBar(document.getElementById('".html::escapeJS('c_content')."')); \n".
+					"		commentTb.draw(); \n".
+					"	}\n".
+					"}\n".
+					"});\n".
+					"\n//]]>\n".
+					"</script>\n";
+			}
 		}
 	}
 }

@@ -8,13 +8,5 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
-if (!defined('DC_RC_PATH')) return;
-
-$this->registerModule(
-	/* Name */		"Comments Wikibar",
-	/* Description*/	"Adds a formatting toolbar when public comments use the wiki syntax",
-	/* Author */		"Pep and contributors",
-	/* Version */		'1.1-beta4',
-	/* Permissions */	'contentadmin'
-);
+if (version_compare(PHP_VERSION,'5.2','<')) return;
 ?>
